@@ -1,3 +1,0 @@
-Ter querys sql no código de uma service isso torna um código grande e ilegível, 
-por isso atribuimos aos repositories o trabalho de ser uma camada de acesso e 
-interação com as entidades do banco de dados.

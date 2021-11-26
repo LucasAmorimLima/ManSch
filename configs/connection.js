@@ -1,7 +1,8 @@
 const Sequelize = require('sequelize') 
-const sequelize = new Sequelize('Escola','root','12345',{
-        host: 'localhost',
-        dialect: 'mysql'
+const {BANK,USER,PASSWORD,HOST,DIALECT} = require('./constants/configDataBase')
+const sequelize = new Sequelize(BANK,USER,PASSWORD,{
+        host: HOST,
+        dialect: DIALECT
     })
     sequelize.authenticate().then(function(){
         console.log("Banco conectado")
