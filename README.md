@@ -42,7 +42,7 @@ I recommend using nodemon
 nodemon app.js
 ```
 
-After running the development server the site should be running on https://localhost:8000
+After running the development server the site should be running on https://localhost:8081
 
 
 ## :open_file_folder: What's inside?
