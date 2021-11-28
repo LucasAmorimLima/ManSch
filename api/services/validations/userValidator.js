@@ -1,4 +1,3 @@
-const cpfValidator = require('./cpfValidator')
 var erro = []
 function validateEmail(email) {
     var re = /\S+@\S+\.\S+/;
@@ -6,18 +5,18 @@ function validateEmail(email) {
 }
 module.exports = {
 
-    userValidator(name,cpf,email,categoria) {
+    userValidator(name,senha,email,categoria) {
         if(name==null || typeof name == undefined){
             erro.push('Nome Inválido')
         }
         if(!(categoria === "Aluno") && !(categoria === "Professor")){
             erro.push('Categoria Inválida')
         }
-        if(cpfValidator.validateCpf(cpf)==false){
-            erro.push('CPF Inválido')
+        if(senha==null || typeof senha == undefined){
+            erro.push('Senha Inválida')
         }
         if(validateEmail(email)==false){
-            erro.push('email Inválido')
+            erro.push('Email Inválido')
         }
         if(erro.length>0){
             
@@ -27,5 +26,5 @@ module.exports = {
             return true
         }
     },
-    error: erro
+    erro: erro
 }

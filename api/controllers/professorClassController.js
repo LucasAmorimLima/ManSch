@@ -1,59 +1,57 @@
 const Users = require('../models/UsersModel')
 const ProfessorClasses = require('../models/ProfessorClassesModel')
-const validator = require('../services/validations/professorClassesValidator');
+const {professorClassesValidator,erro} = require('../services/validations/professorClassesValidator');
 
-    exports.index = (req, res, next) => {
+    exports.index = async (req, res, next) => {
          
-        Users.findAll({where: {categoria: "Professor"}}).then((result)=>{
+        await Users.findAll({where: {categoria: "Professor"}}).then((result)=>{
             res.send(result)
             next()
         }).catch((error)=>{
-            error.push(error)
-            next(error);
+            exptions.push(500,error)
+            next();
         })     
     }  
 
-    exports.show = (req, res, next) => {
+    exports.show = async (req, res, next) => {
         let id = req.body.id 
-        Users.findAll({where: {id: id}}).then(()=>{
+        await Users.findAll({where: {id: id}}).then(()=>{
             next()
         }).catch((error)=>{
-            error.push(error)
-            next(error);
+            exptions.push(500,error)
+            next();
         })
     };
     exports.insert  =  async (req, res, next) => {  
 
         const data = req.body
         console.log(data)
-        if(await validator.professorClassesValidator(data.idClasses, data.idUsers)){
-                      
+        if(await professorClassesValidator(data.idClasses, data.idUsers)){
+                   
             await  ProfessorClasses.create({
                 idClasses: data.idClasses,
                 idUsers: data.idUsers,
-                    }).then(()=>{
-                        next()
-                    }).catch(()=>{
-                        error.push(error)
-                        next(error);
-                    })
-
-            
+            }).then(()=>{
+                next()
+            }).catch((error)=>{
+                exptions.push(500,error)
+                next();
+        })  
         }else{
-            error.push(validator.error)
-            next(error);
+            exptions.push(401,erro)
+            next();
         }
                   
     };
     
-    exports.destroy = (req, res, next) => {;
+    exports.destroy = async (req, res, next) => {;
         let id = req.body.id;
         
-        ProfessorClasses.destroy({where: {id: id}}).then((error)=>{
+        await ProfessorClasses.destroy({where: {id: id}}).then((error)=>{
             next()
-        }).catch(()=>{
-            error.push(error)
-            next(error);
+        }).catch((error)=>{
+            exptions.push(500,error)
+            next();
         })
     };  
 

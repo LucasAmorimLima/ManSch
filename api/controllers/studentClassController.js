@@ -1,59 +1,57 @@
 const Users = require('../models/UsersModel')
 const StudentClasses = require('../models/StudentClassesModel')
-const validator = require('../services/validations/studentClassesValidator');
+const {studentClassesValidator,erro} = require('../services/validations/studentClassesValidator');
 
-    exports.index = (req, res, next) => {
+    exports.index = async (req, res, next) => {
          
-        Users.findAll({where: {categoria: "Aluno"}}).then((result)=>{
-            res.send(result)
-            next()
+        await Users.findAll({where: {categoria: "Aluno"}}).then((result)=>{
+            
         }).catch((error)=>{
-            error.push(error)
-            next(error);
+            exptions.push(500,error)
+            next();
         })     
     }  
 
-    exports.show = (req, res, next) => {
+    exports.show = async (req, res, next) => {
         let id = req.body.id 
-        Users.findAll({where: {id: id}}).then(()=>{
+        await Users.findAll({where: {id: id}}).then(()=>{
             next()
         }).catch((error)=>{
-            error.push(error)
-            next(error);
+            exptions.push(500,error)
+            next();
         })
     };
     exports.insert  =  async (req, res, next) => {  
 
         const data = req.body
         console.log(data)
-        if(await validator.studentClassesValidator(data.idClasses, data.idUsers)){
+        if(await studentClassesValidator(data.idClasses, data.idUsers)){
                       
             await  ProfessorClasses.create({
                 idClasses: data.idClasses,
                 idUsers: data.idUsers,
-                    }).then(()=>{
-                        next()
-                    }).catch(()=>{
-                        error.push(error)
-                        next(error);
-                    })
+            }).then(()=>{
+                next()
+            }).catch((error)=>{
+                exptions.push(500,error)
+                next();
+            })
 
             
         }else{
-            error.push(validator.error)
-            next(error);
+            exptions.push(401,erro)
+            next();
         }
                   
     };
     
-    exports.destroy = (req, res, next) => {;
+    exports.destroy = async (req, res, next) => {;
         let id = req.body.id;
         
-        StudentClasses.destroy({where: {id: id}}).then((error)=>{
-            next()
-        }).catch(()=>{
-            error.push(error)
-            next(error);
+        await StudentClasses.destroy({where: {id: id}}).then((error)=>{
+        }).catch((error)=>{
+            exptions.push(500,error)
+            next();
         })
     };  
 

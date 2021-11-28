@@ -1,60 +1,56 @@
 const Classes = require('../models/ClassesModel')
-const validator = require('../services/validations/classesValidator');
+const {classesValidator,erro} = require('../services/validations/classesValidator');
 
-    exports.index = (req, res, next) => {
-        try {
-            const result = Classes.findAll({order: [['id', 'ASC']],}) 
-            next()
-        } catch (error) {            
-            error.push(error)
-            next(error);
-        }     
+    exports.index = async (req, res, next) => {
+        
+        await Classes.findAll({order: [['id', 'ASC']],}).then(()=>{
+
+        }).catch ((error)=> {            
+            exptions.push(500,error)
+            next();
+        })
     }  
 
-    exports.show = (req, res, next) => {
+    exports.show = async (req, res, next) => {
         let id = req.body.id 
-        try {
-            Classes.findAll({where: {id: id}
-            });
-        } catch (error) {
-            error.push(error)
-            next(error);
-        }
+        
+        await Classes.findAll({where: {id: id}}).then((result)=>{
+        }).catch ((error)=> {
+            exptions.push(500,error)
+            next();
+        })
     };
-    exports.insert  = (req, res, next) => {  
+    exports.insert  = async (req, res, next) => {  
 
         const data = req.body
         console.log(data)
-        if(validator.classesValidator(data.name, data.disciplinas, data.horarios, data.diaDaSemana)){
-            
-            try{              
-                Classes.create({
-                    nome: data.name,
-                    disciplinas: data.disciplinas,
-                    horarios: data.horarios,
-                    diaDaSemana: data.diaDaSemana
-                    })
-                next()
-            }catch (error) {
-                error.push(error)
-                next(error);
-            }
+        if(classesValidator(data.name, data.disciplinas, data.horarios, data.diaDaSemana)){            
+            await Classes.create({
+                nome: data.name,
+                disciplinas: data.disciplinas,
+                horarios: data.horarios,
+                diaDaSemana: data.diaDaSemana
+            }).then((result)=>{
+
+            }).catch((error)=> {
+                exptions.push(500,error)
+                next();
+            })
         }else{
-            error.push(validator.error)
-            next(error);
+            exptions.push(401,erro)
+            next();
         }
                   
     };
   
-    exports.destroy = (req, res, next) => {;
+    exports.destroy = async (req, res, next) => {;
         let id = req.body.id;
-        
-        try {
-            Classes.destroy({where: {id: id}});
-        } catch (error) {
-            error.push(error)
-            next(error);
-        }
+        await Classes.destroy({where: {id: id}}).then((result)=>{
+
+        }).catch ((error)=> {
+            exptions.push(500,error)
+            next();
+        })
     };  
     
     

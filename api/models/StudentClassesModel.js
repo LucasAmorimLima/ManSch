@@ -9,7 +9,7 @@ const StudentClasses = conexao.sequelize.define('aluno_turma', {
     references: {model: 'turmas' , key: 'id'},
     onDelete: 'CASCADE',
     allowNull: false
-  },
+  },   
   idUsers: {
     type: DataTypes.INTEGER,
     references: {model: 'users' , key: 'id'},

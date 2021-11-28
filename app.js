@@ -1,14 +1,13 @@
 require('express-async-errors');
 const express = require('express')
 const bodyParser = require('body-parser')
-const {engine} = require('express-handlebars')
-const path = require('path')
 const classes = require('./routes/classes')
 const login = require('./routes/login')
 const user = require('./routes/user')
 const student = require('./routes/student')
 const professor = require('./routes/professor')
-global.error = []
+global.exeptions = []
+
 // create the server
     const app = express();
 //configs
@@ -22,13 +21,11 @@ global.error = []
     app.use('/aluno',student)
 //middleware error controller
 app.use((error, req, res, next) => {
-    res.status(500).send(error)
+
+    res.status(exeptions[0]).send(exeptions[1])
+    
 })
-//Handlebars
-app.engine('handlebars', engine())
-app.set('view engine','handlebars')
-//path
-app.use(express.static(path.join(__dirname,'public')))
+
 
 const PORT = 8081
 app.listen(PORT,()=>{

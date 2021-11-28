@@ -8,7 +8,7 @@ const Turma = conexao.sequelize.define('turmas', {
     type: DataTypes.STRING,
     allowNull: false
   },
-  disciplinas: {
+  disciplinas: {   
     type: DataTypes.STRING,
     allowNull: false
   },
