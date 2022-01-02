@@ -5,7 +5,7 @@ const {studentClassesValidator,erro} = require('../services/validations/studentC
     exports.index = async (req, res, next) => {
          
         await Users.findAll({where: {categoria: "Aluno"}}).then((result)=>{
-            
+            return res.status(200).json(result)
         }).catch((error)=>{
             exptions.push(500,error)
             next();
@@ -15,7 +15,7 @@ const {studentClassesValidator,erro} = require('../services/validations/studentC
     exports.show = async (req, res, next) => {
         let id = req.body.id 
         await Users.findAll({where: {id: id}}).then(()=>{
-            next()
+            return res.status(200).json(result)
         }).catch((error)=>{
             exptions.push(500,error)
             next();
@@ -24,19 +24,18 @@ const {studentClassesValidator,erro} = require('../services/validations/studentC
     exports.insert  =  async (req, res, next) => {  
 
         const data = req.body
-        console.log(data)
+        
         if(await studentClassesValidator(data.idClasses, data.idUsers)){
                       
             await  ProfessorClasses.create({
                 idClasses: data.idClasses,
                 idUsers: data.idUsers,
             }).then(()=>{
-                next()
+                return res.status(200).json(result)
             }).catch((error)=>{
                 exptions.push(500,error)
                 next();
             })
-
             
         }else{
             exptions.push(401,erro)
@@ -48,7 +47,8 @@ const {studentClassesValidator,erro} = require('../services/validations/studentC
     exports.destroy = async (req, res, next) => {;
         let id = req.body.id;
         
-        await StudentClasses.destroy({where: {id: id}}).then((error)=>{
+        await StudentClasses.destroy({where: {id: id}}).then((result)=>{
+            return res.status(200).json(result)
         }).catch((error)=>{
             exptions.push(500,error)
             next();
