@@ -8,7 +8,7 @@ exports.insert  = async (req, res) => {
   await UsersModel.findAll({where:{ email: email, senha: senha}})
   .then((result)=>{
 
-  return res.json({auth: true, id:result[0].id, name:result[0].name ,categoria: result[0].categoria, token: generateJWT(result[0].id)})
+  return res.status(200).json({auth: true, id:result[0].id, name:result[0].name ,categoria: result[0].categoria, token: generateJWT(result[0].id)})
 
     }).catch(()=>{
       exeptions.push(401,"Usuario inválido ou inexistente")      

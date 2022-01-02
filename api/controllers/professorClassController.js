@@ -5,8 +5,7 @@ const {professorClassesValidator,erro} = require('../services/validations/profes
     exports.index = async (req, res, next) => {
          
         await Users.findAll({where: {categoria: "Professor"}}).then((result)=>{
-            res.send(result)
-            next()
+            return res.status(200).json(result)
         }).catch((error)=>{
             exptions.push(500,error)
             next();
@@ -16,7 +15,7 @@ const {professorClassesValidator,erro} = require('../services/validations/profes
     exports.show = async (req, res, next) => {
         let id = req.body.id 
         await Users.findAll({where: {id: id}}).then(()=>{
-            next()
+            return res.status(200).json(result)
         }).catch((error)=>{
             exptions.push(500,error)
             next();
@@ -32,7 +31,7 @@ const {professorClassesValidator,erro} = require('../services/validations/profes
                 idClasses: data.idClasses,
                 idUsers: data.idUsers,
             }).then(()=>{
-                next()
+                return res.status(200).json(result)
             }).catch((error)=>{
                 exptions.push(500,error)
                 next();
@@ -47,8 +46,8 @@ const {professorClassesValidator,erro} = require('../services/validations/profes
     exports.destroy = async (req, res, next) => {;
         let id = req.body.id;
         
-        await ProfessorClasses.destroy({where: {id: id}}).then((error)=>{
-            next()
+        await ProfessorClasses.destroy({where: {id: id}}).then((result)=>{
+            return res.status(200).json(result)
         }).catch((error)=>{
             exptions.push(500,error)
             next();

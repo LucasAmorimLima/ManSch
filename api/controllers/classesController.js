@@ -4,7 +4,7 @@ const {classesValidator,erro} = require('../services/validations/classesValidato
     exports.index = async (req, res, next) => {
         
         await Classes.findAll({order: [['id', 'ASC']],}).then(()=>{
-
+            return res.status(200).json(result)
         }).catch ((error)=> {            
             exptions.push(500,error)
             next();
@@ -15,6 +15,7 @@ const {classesValidator,erro} = require('../services/validations/classesValidato
         let id = req.body.id 
         
         await Classes.findAll({where: {id: id}}).then((result)=>{
+            return res.status(200).json(result)
         }).catch ((error)=> {
             exptions.push(500,error)
             next();
@@ -23,7 +24,7 @@ const {classesValidator,erro} = require('../services/validations/classesValidato
     exports.insert  = async (req, res, next) => {  
 
         const data = req.body
-        console.log(data)
+
         if(classesValidator(data.name, data.disciplinas, data.horarios, data.diaDaSemana)){            
             await Classes.create({
                 nome: data.name,
@@ -31,7 +32,7 @@ const {classesValidator,erro} = require('../services/validations/classesValidato
                 horarios: data.horarios,
                 diaDaSemana: data.diaDaSemana
             }).then((result)=>{
-
+                return res.status(200).json(result)
             }).catch((error)=> {
                 exptions.push(500,error)
                 next();
@@ -46,7 +47,7 @@ const {classesValidator,erro} = require('../services/validations/classesValidato
     exports.destroy = async (req, res, next) => {;
         let id = req.body.id;
         await Classes.destroy({where: {id: id}}).then((result)=>{
-
+            return res.status(200).json(result)
         }).catch ((error)=> {
             exptions.push(500,error)
             next();

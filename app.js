@@ -6,28 +6,19 @@ const login = require('./routes/login')
 const user = require('./routes/user')
 const student = require('./routes/student')
 const professor = require('./routes/professor')
-global.exeptions = []
-
+const {PORT} = require('./configs/constants/auth')
 // create the server
     const app = express();
 //configs
     app.use(bodyParser.urlencoded({extended: true}))
     app.use(bodyParser.json())
 //rotas 
-    app.use('/turmas',classes)
+    app.use('/class',classes)
     app.use('/login',login)
-    app.use('/usuario',user)
+    app.use('/user',user)
     app.use('/professor',professor)
-    app.use('/aluno',student)
-//middleware error controller
-app.use((error, req, res, next) => {
-
-    res.status(exeptions[0]).send(exeptions[1])
-    
-})
+    app.use('/student',student)
 
 
-const PORT = 8081
-app.listen(PORT,()=>{
-
-})
+    app.listen(PORT,()=>console.log(`Server Started at Port ${PORT}
+    => http://localhost:${PORT}`))
